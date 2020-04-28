@@ -13,9 +13,5 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ReplyApp.Models\ReplyApp.Models.csproj" />
-  </ItemGroup>
-
 
 </Project>

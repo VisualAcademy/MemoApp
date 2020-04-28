@@ -21,7 +21,6 @@
   <ItemGroup>
     <ProjectReference Include="..\BlazorInputFile\BlazorInputFile.csproj" />
     <ProjectReference Include="..\BlazorUtils\BlazorUtils.csproj" />
-    <ProjectReference Include="..\ReplyApp.Models\ReplyApp.Models.csproj" />
   </ItemGroup>
 
 </Project>
