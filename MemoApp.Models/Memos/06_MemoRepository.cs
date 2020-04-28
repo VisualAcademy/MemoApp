@@ -26,7 +26,7 @@ namespace MemoApp.Models
         //[6][1] 입력
         public async Task<Memo> AddAsync(Memo model)
         {
-            #region Memo 기능 추가
+            #region 답변 기능 추가
             // 현재테이블의 Ref의 Max값 가져오기
             int maxRef = 1;
             int? max = _context.Memos.Max(m => m.Ref);
@@ -374,12 +374,12 @@ namespace MemoApp.Models
             return new ArticleSet<Memo, int>(await items.ToListAsync(), totalCount);
         }
 
-        //[6][16] 답변
-        public async Task<Memo> AddAsync(Memo model, int parentRef, int parentStep, int parentOrder)
+        //[6][16] 답변: ReplyApp
+        public async Task<Memo> AddAsync(Memo model, int parentRef, int parentStep, int parentRefOrder)
         {
             #region 답변 관련 기능 추가된 영역
             // 비집고 들어갈 자리: 부모글 순서보다 큰 글이 있다면(기존 답변 글이 있다면) 해당 글의 순서를 모두 1씩 증가 
-            var replys = await _context.Memos.Where(m => m.Ref == parentRef && m.RefOrder > parentOrder).ToListAsync();
+            var replys = await _context.Memos.Where(m => m.Ref == parentRef && m.RefOrder > parentRefOrder).ToListAsync();
             foreach (var item in replys)
             {
                 item.RefOrder = item.RefOrder + 1;
@@ -397,7 +397,76 @@ namespace MemoApp.Models
 
             model.Ref = parentRef; // 답변 글의 Ref(그룹)은 부모 글의 Ref를 그대로 저장 
             model.Step = parentStep + 1; // 어떤 글의 답변 글이기에 들여쓰기 1 증가 
-            model.RefOrder = parentOrder + 1; // 부모글의 바로 다음번 순서로 보여지도록 설정 
+            model.RefOrder = parentRefOrder + 1; // 부모글의 바로 다음번 순서로 보여지도록 설정 
+            #endregion
+
+            try
+            {
+                _context.Memos.Add(model);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                _logger?.LogError($"ERROR({nameof(AddAsync)}): {e.Message}");
+            }
+
+            return model;
+        }
+
+        //[6][17] 답변
+        public async Task<Memo> AddAsync(Memo model, int parentId)
+        {
+            #region 답변 관련 기능 추가된 영역
+            //[0] 변수 선언
+            var maxRefOrder = 0;
+            var maxRefAnswerNum = 0;
+            var parentRef = 0;
+            var parentStep = 0;
+            var parentRefOrder = 0; 
+
+            //[1] 부모글의 답변수(AnswerNum)를 1증가
+            var parent = await _context.Memos.Where(m => m.Id == parentId).SingleOrDefaultAsync();
+            if (parent != null)
+            {
+                parentRef = parent?.Ref ?? 0;
+                parentStep = parent?.Step ?? 0;
+                parentRefOrder = parent?.RefOrder ?? 0;
+
+                parent.AnswerNum = parent.AnswerNum + 1;
+                _context.Entry(parent).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+            }
+
+            //[2] 동일 레벨의 답변이라면, 답변 순서대로 RefOrder를 설정
+            var tempMaxRefOrder = await _context.Memos.Where(m => m.ParentNum == parentId).MaxAsync(m => m.RefOrder);
+
+            var sameGroup = await _context.Memos.Where(m => m.ParentNum == parentId && m.RefOrder == tempMaxRefOrder).FirstOrDefaultAsync();
+            if (sameGroup != null)
+            {
+                maxRefOrder = sameGroup.RefOrder;
+                maxRefAnswerNum = sameGroup.AnswerNum;
+            }
+
+            //[3] 중간에 답변달 때(비집고 들어갈 자리 마련): 부모글 순서보다 큰 글이 있다면(기존 답변 글이 있다면) 해당 글의 순서를 모두 1씩 증가 
+            var replys = await _context.Memos.Where(m => m.Ref == parentRef && m.RefOrder > (maxRefOrder + maxRefAnswerNum)).ToListAsync();
+            foreach (var item in replys)
+            {
+                item.RefOrder = item.RefOrder + 1;
+                try
+                {
+                    _context.Memos.Attach(item);
+                    _context.Entry(item).State = EntityState.Modified;
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    _logger?.LogError($"ERROR({nameof(AddAsync)}): {e.Message}");
+                }
+            }
+
+            model.Ref = parentRef; // 답변 글의 Ref(그룹)은 부모 글의 Ref를 그대로 저장 
+            model.Step = parentStep + 1; // 어떤 글의 답변 글이기에 들여쓰기 1 증가 
+            model.RefOrder = (maxRefOrder + maxRefAnswerNum + 1); // 부모글의 바로 다음번 순서로 보여지도록 설정 
             #endregion
 
             try

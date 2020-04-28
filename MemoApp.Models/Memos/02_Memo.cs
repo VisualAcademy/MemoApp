@@ -170,17 +170,17 @@ namespace MemoApp.Models
         /// <summary>
         /// 참조(부모글, 참조 번호)
         /// </summary>
-        public int? Ref { get; set; }
+        public int Ref { get; set; }
 
         /// <summary>
         /// 답변깊이(레벨, 들여쓰기)
         /// </summary>
-        public int? Step { get; set; }
+        public int Step { get; set; }
 
         /// <summary>
         /// 답변(참조) 순서
         /// </summary>
-        public int? RefOrder { get; set; }
+        public int RefOrder { get; set; }
 
         /// <summary>
         /// 답변수

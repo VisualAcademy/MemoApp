@@ -19,7 +19,10 @@ namespace MemoApp.Models
             T model,
             int parentRef,
             int parentStep,
-            int parentOrder); // 답변
+            int parentRefOrder); // 답변(기본: ReplyApp)
+        Task<T> AddAsync(
+            T model,
+            int parentId); // 답변(고급: MemoApp)
 
         // 페이징
         Task<PagingResult<T>> GetAllAsync(

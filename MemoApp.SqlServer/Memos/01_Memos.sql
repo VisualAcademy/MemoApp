@@ -37,9 +37,9 @@ CREATE TABLE [dbo].[Memos]
 
 	--[3] 답변형 게시판 관련 주요 컬럼
     Ref             Int Not Null,                               -- 참조(부모글)
-    Step            Int Default 0,                              -- 답변깊이(레벨)
-    RefOrder        Int Default 0,                              -- 답변순서
-    AnswerNum       Int Default 0,                              -- 답변수
-    ParentNum       Int Default 0,                              -- 부모글번호
+    Step            Int Not Null Default 0,                              -- 답변깊이(레벨)
+    RefOrder        Int Not Null Default 0,                              -- 답변순서
+    AnswerNum       Int Not Null Default 0,                              -- 답변수
+    ParentNum       Int Not Null Default 0,                              -- 부모글번호
 )
 Go
