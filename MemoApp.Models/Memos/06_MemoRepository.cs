@@ -419,7 +419,7 @@ namespace MemoApp.Models
             #region 답변 관련 기능 추가된 영역
             //[0] 변수 선언
             var maxRefOrder = 0;
-            var maxRefAnswerNum = 0;
+            var maxAnswerNum = 0;
             var parentRef = 0;
             var parentStep = 0;
             var parentRefOrder = 0; 
@@ -439,16 +439,23 @@ namespace MemoApp.Models
 
             //[2] 동일 레벨의 답변이라면, 답변 순서대로 RefOrder를 설정
             var tempMaxRefOrder = await _context.Memos.Where(m => m.ParentNum == parentId).MaxAsync(m => m.RefOrder);
-
             var sameGroup = await _context.Memos.Where(m => m.ParentNum == parentId && m.RefOrder == tempMaxRefOrder).FirstOrDefaultAsync();
             if (sameGroup != null)
             {
                 maxRefOrder = sameGroup.RefOrder;
-                maxRefAnswerNum = sameGroup.AnswerNum;
+                maxAnswerNum = sameGroup.AnswerNum;
+            }
+            else
+            {
+                var tmpParent = await _context.Memos.Where(m => m.Id == parentId).SingleOrDefaultAsync();
+                if (tmpParent != null)
+                {
+                    maxRefOrder = tmpParent.RefOrder; 
+                }
             }
 
             //[3] 중간에 답변달 때(비집고 들어갈 자리 마련): 부모글 순서보다 큰 글이 있다면(기존 답변 글이 있다면) 해당 글의 순서를 모두 1씩 증가 
-            var replys = await _context.Memos.Where(m => m.Ref == parentRef && m.RefOrder > (maxRefOrder + maxRefAnswerNum)).ToListAsync();
+            var replys = await _context.Memos.Where(m => m.Ref == parentRef && m.RefOrder > (maxRefOrder + maxAnswerNum)).ToListAsync();
             foreach (var item in replys)
             {
                 item.RefOrder = item.RefOrder + 1;
@@ -466,7 +473,7 @@ namespace MemoApp.Models
 
             model.Ref = parentRef; // 답변 글의 Ref(그룹)은 부모 글의 Ref를 그대로 저장 
             model.Step = parentStep + 1; // 어떤 글의 답변 글이기에 들여쓰기 1 증가 
-            model.RefOrder = (maxRefOrder + maxRefAnswerNum + 1); // 부모글의 바로 다음번 순서로 보여지도록 설정 
+            model.RefOrder = (maxRefOrder + maxAnswerNum + 1); // 부모글의 바로 다음번 순서로 보여지도록 설정 
             #endregion
 
             try
