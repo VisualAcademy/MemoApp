@@ -29,7 +29,7 @@ namespace MemoApp.Models
             #region 답변 기능 추가
             // 현재테이블의 Ref의 Max값 가져오기
             int maxRef = 1;
-            int? max = _context.Memos.Max(m => m.Ref);
+            int? max = await _context.Memos.DefaultIfEmpty().MaxAsync(m => m == null ? 0 : m.Ref);
             if (max.HasValue)
             {
                 maxRef = (int)max + 1;
@@ -422,10 +422,10 @@ namespace MemoApp.Models
             var maxAnswerNum = 0;
             var parentRef = 0;
             var parentStep = 0;
-            var parentRefOrder = 0; 
+            var parentRefOrder = 0;
 
             //[1] 부모글의 답변수(AnswerNum)를 1증가
-            var parent = await _context.Memos.Where(m => m.Id == parentId).SingleOrDefaultAsync();
+            var parent = await GetByIdAsync(parentId);
             if (parent != null)
             {
                 parentRef = parent?.Ref ?? 0;
@@ -433,12 +433,12 @@ namespace MemoApp.Models
                 parentRefOrder = parent?.RefOrder ?? 0;
 
                 parent.AnswerNum = parent.AnswerNum + 1;
-                _context.Entry(parent).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+
+                await EditAsync(parent);
             }
 
             //[2] 동일 레벨의 답변이라면, 답변 순서대로 RefOrder를 설정
-            var tempMaxRefOrder = await _context.Memos.Where(m => m.ParentNum == parentId).MaxAsync(m => m.RefOrder);
+            var tempMaxRefOrder = await _context.Memos.Where(m => m.ParentNum == parentId).DefaultIfEmpty().MaxAsync(m => m == null ? 0 : m.RefOrder);
             var sameGroup = await _context.Memos.Where(m => m.ParentNum == parentId && m.RefOrder == tempMaxRefOrder).FirstOrDefaultAsync();
             if (sameGroup != null)
             {
@@ -461,7 +461,7 @@ namespace MemoApp.Models
                 item.RefOrder = item.RefOrder + 1;
                 try
                 {
-                    _context.Memos.Attach(item);
+                    //_context.Memos.Attach(item);
                     _context.Entry(item).State = EntityState.Modified;
                     await _context.SaveChangesAsync();
                 }
@@ -474,6 +474,9 @@ namespace MemoApp.Models
             model.Ref = parentRef; // 답변 글의 Ref(그룹)은 부모 글의 Ref를 그대로 저장 
             model.Step = parentStep + 1; // 어떤 글의 답변 글이기에 들여쓰기 1 증가 
             model.RefOrder = (maxRefOrder + maxAnswerNum + 1); // 부모글의 바로 다음번 순서로 보여지도록 설정 
+
+            model.ParentNum = parentId;
+            model.AnswerNum = 0; 
             #endregion
 
             try

@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MemoApp.Areas.Identity;
 using MemoApp.Data;
+using MemoApp.Managers;
+using MemoApp.Models;
 
 namespace MemoApp
 {
@@ -40,6 +42,24 @@ namespace MemoApp
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
+
+            AddDependencyInjectionContainerForMemoApp(services);
+
+            services.AddTransient<IMemoFileStorageManager, MemoAppFileStorageManager>(); // Local Upload
+        }
+
+        /// <summary>
+        /// Qna(ReplyApp) 관련 의존성(종속성) 주입 관련 코드만 따로 모아서 관리 
+        /// </summary>
+        /// <param name="services"></param>
+        private void AddDependencyInjectionContainerForMemoApp(IServiceCollection services)
+        {
+            // ReplyAppDbContext.cs Inject: New DbContext Add
+            services.AddEntityFrameworkSqlServer().AddDbContext<MemoAppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")), ServiceLifetime.Transient);
+
+            // IReplyRepositoryAsync.cs Inject: DI Container에 서비스(리포지토리) 등록 
+            services.AddTransient<IMemoRepository, MemoRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
