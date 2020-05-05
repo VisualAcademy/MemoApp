@@ -1,17 +1,18 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using MemoApp.Models;
+using Microsoft.AspNetCore.Hosting;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace MemoApp.Managers
+namespace MemoApp.Memos
 {
-    public class MemoAppFileStorageManager : IMemoFileStorageManager
+    public class MemoFileStorageManager : IMemoFileStorageManager
     {
         private readonly IWebHostEnvironment _environment;
         private readonly string _containerName;
         private readonly string _folderPath;
 
-        public MemoAppFileStorageManager(IWebHostEnvironment environment)
+        public MemoFileStorageManager(IWebHostEnvironment environment)
         {
             this._environment = environment;
             _containerName = "files";

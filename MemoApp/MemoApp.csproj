@@ -18,10 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BlazorInputFile\BlazorInputFile.csproj" />
     <ProjectReference Include="..\BlazorUtils\BlazorUtils.csproj" />
     <ProjectReference Include="..\MemoApp.Models\MemoApp.Models.csproj" />

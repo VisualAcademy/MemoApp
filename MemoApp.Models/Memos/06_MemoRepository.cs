@@ -413,7 +413,7 @@ namespace MemoApp.Models
             return model;
         }
 
-        //[6][17] 답변
+        //[6][17] 답변: MemoApp
         public async Task<Memo> AddAsync(Memo model, int parentId)
         {
             #region 답변 관련 기능 추가된 영역

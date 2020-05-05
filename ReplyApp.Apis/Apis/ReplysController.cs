@@ -30,7 +30,7 @@ namespace ReplyApp.Apis.Controllers
         // 출력
         // GET api/Replys
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll() // GetReplysAsync()
         {
             try
             {

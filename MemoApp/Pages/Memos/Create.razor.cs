@@ -1,9 +1,8 @@
 ﻿using BlazorInputFile;
+using MemoApp.Models;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Linq;
-using MemoApp.Models;
-using MemoApp.Managers;
 using System.Threading.Tasks;
 
 namespace MemoApp.Pages.Memos
@@ -14,7 +13,7 @@ namespace MemoApp.Pages.Memos
         /// <summary>
         /// 첨부 파일 리스트 보관
         /// </summary>
-        private IFileListEntry[] selectedFiles; 
+        private IFileListEntry[] selectedFiles;
 
         /// <summary>
         /// 부모(카테고리) 리스트가 저장될 임시 변수
@@ -34,7 +33,7 @@ namespace MemoApp.Pages.Memos
 
         // Injector 접미사 사용해 봄 
         [Inject]
-        public NavigationManager NavigationManagerInjector { get; set; } 
+        public NavigationManager NavigationManagerInjector { get; set; }
 
         [Inject]
         public IMemoFileStorageManager FileStorageManagerInjector { get; set; }
@@ -77,7 +76,7 @@ namespace MemoApp.Pages.Memos
                 ParentStep = (int)parent.Step;
                 ParentRefOrder = (int)parent.RefOrder;
             }
-        } 
+        }
         #endregion
 
         #region Event Handlers
@@ -159,7 +158,7 @@ namespace MemoApp.Pages.Memos
         protected void HandleSelection(IFileListEntry[] files)
         {
             this.selectedFiles = files;
-        } 
+        }
         #endregion
     }
 }
