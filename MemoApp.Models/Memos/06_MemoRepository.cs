@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 namespace MemoApp.Models
 {
     /// <summary>
-    /// [6] Repository Class: ADO.NET or Dapper or Entity Framework Core, Provider
+    /// [6] Repository Class: ADO.NET or Dapper or Entity Framework Core, 
+    /// ~Repository, ~Provider, ~Data
     /// </summary>
     public class MemoRepository : IMemoRepository
     {
