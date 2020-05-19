@@ -55,6 +55,7 @@ namespace MemoApp.Models
         [Required(ErrorMessage = "이름을 입력하세요.")]
         [MaxLength(255)]
         [Display(Name = "작성자")]
+        [Column(TypeName = "NVarChar(255)")]
         public string Name { get; set; }
 
         /// <summary>
@@ -67,6 +68,7 @@ namespace MemoApp.Models
         /// 작성지 IP 주소
         /// </summary>
         [Display(Name = "작성IP")]
+        [Column(TypeName = "NVarChar(255)")]
         public string PostIp { get; set; }
 
         /// <summary>
@@ -75,6 +77,7 @@ namespace MemoApp.Models
         [MaxLength(255)]
         [Required(ErrorMessage = "제목을 입력하세요.")]
         [Display(Name = "제목")]
+        [Column(TypeName = "NVarChar(255)")]
         public string Title { get; set; }
 
         /// <summary>
