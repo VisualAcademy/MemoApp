@@ -14,6 +14,7 @@ namespace MemoApp.Models
         Task<List<T>> GetAllAsync(); // 출력
         Task<T> GetByIdAsync(int id); // 상세
         Task<bool> EditAsync(T model); // 수정
+        //Task<bool> UpdateAsync(T model); // 수정 // https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.identity.usermanager-1.updateasync?view=aspnetcore-3.1
         Task<bool> DeleteAsync(int id); // 삭제
         Task<T> AddAsync(
             T model,
