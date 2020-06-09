@@ -1,4 +1,5 @@
-﻿using System;
+﻿// PM> Install-Package System.ComponentModel.Annotations
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -206,6 +207,7 @@ namespace MemoApp.Models
     [Table("Memos")]
     public class Memo : MemoBase
     {
+        // PM> Install-Package System.ComponentModel.Annotations
         // Empty
     }
 }
