@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MemoApp.Models
 {
     /// <summary>
-    /// [6] Repository Class: ADO.NET or Dapper or Entity Framework Core, 
+    /// [6] Repository Class: ADO.NET or Dapper or Entity Framework Core
     /// ~Repository, ~Provider, ~Data
     /// </summary>
     public class MemoRepository : IMemoRepository
@@ -24,6 +24,7 @@ namespace MemoApp.Models
             this._logger = loggerFactory.CreateLogger(nameof(MemoRepository));
         }
 
+        #region [6][1] 입력: AddAsync
         //[6][1] 입력
         public async Task<Memo> AddAsync(Memo model)
         {
@@ -53,20 +54,24 @@ namespace MemoApp.Models
 
             return model;
         }
+        #endregion
 
+        #region [6][2] 출력: GetAllAsync
         //[6][2] 출력
         public async Task<List<Memo>> GetAllAsync()
         {
-            //return await _context.Memos.FromSqlRaw<Memo>("Select * From dbo.Memos Order By Id Desc") // 학습 목적으로... InMemory 사용 금지 
+            // 학습 목적으로... InMemory 데이터베이스에선 사용 금지 
+            //return await _context.Memos.FromSqlRaw<Memo>("Select * From dbo.Memos Order By Id Desc") 
             return await _context.Memos.OrderByDescending(m => m.Id)
                 //.Include(m => m.MemosComments)
                 .ToListAsync();
         }
+        #endregion
 
+        #region //[6][3] 상세: GetByIdAsync
         //[6][3] 상세
         public async Task<Memo> GetByIdAsync(int id)
         {
-
             var model = await _context.Memos
                 //.Include(m => m.MemosComments)
                 .SingleOrDefaultAsync(m => m.Id == id);
@@ -77,12 +82,14 @@ namespace MemoApp.Models
                 model.ReadCount = model.ReadCount + 1;
                 _context.Memos.Attach(model);
                 _context.Entry(model).State = EntityState.Modified;
-                _context.SaveChanges(); 
+                _context.SaveChanges();
             }
 
-            return model; 
+            return model;
         }
+        #endregion
 
+        #region //[6][4] 수정: UpdateAsync
         //[6][4] 수정
         public async Task<bool> EditAsync(Memo model)
         {
@@ -100,7 +107,9 @@ namespace MemoApp.Models
 
             return false;
         }
+        #endregion
 
+        #region //[6][5] 삭제: DeleteAsync
         //[6][5] 삭제
         public async Task<bool> DeleteAsync(int id)
         {
@@ -118,7 +127,8 @@ namespace MemoApp.Models
             }
 
             return false;
-        }
+        } 
+        #endregion
 
         //[6][6] 페이징
         public async Task<PagingResult<Memo>> GetAllAsync(int pageIndex, int pageSize)
