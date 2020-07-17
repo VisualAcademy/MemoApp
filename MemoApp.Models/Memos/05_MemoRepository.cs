@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MemoApp.Models
 {
     /// <summary>
-    /// [6] Repository Class: ADO.NET or Dapper or Entity Framework Core
+    /// [5] Repository Class: ADO.NET or Dapper or Entity Framework Core
     /// ~Repository, ~Provider, ~Data
     /// </summary>
     public class MemoRepository : IMemoRepository
@@ -92,6 +92,22 @@ namespace MemoApp.Models
         #region //[6][4] 수정: UpdateAsync
         //[6][4] 수정
         public async Task<bool> EditAsync(Memo model)
+        {
+            try
+            {
+                //_context.Memos.Attach(model);
+                //_context.Entry(model).State = EntityState.Modified;
+                _context.Update(model);
+                return (await _context.SaveChangesAsync() > 0 ? true : false);
+            }
+            catch (Exception e)
+            {
+                _logger?.LogError($"ERROR({nameof(EditAsync)}): {e.Message}");
+            }
+
+            return false;
+        }
+        public async Task<bool> UpdateAsync(Memo model)
         {
             try
             {

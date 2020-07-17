@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 namespace MemoApp.Models
 {
     /// <summary>
-    /// [4] Repository Interface, Provider Interface
+    /// [3] Repository Interface, Provider Interface
     /// </summary>
     public interface IMemoRepository : IMemoCrudRepository<Memo>
     {

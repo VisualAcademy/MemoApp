@@ -59,7 +59,7 @@
     <Folder Include="Memos" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Memos\01_Memos.sql" />
+    <Build Include="Memos\00_Memos.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="MemoApp.SqlServer.publish.xml" />

@@ -201,7 +201,7 @@ namespace MemoApp.Models
     }
 
     /// <summary>
-    /// [2] Model Class: Memo 모델 클래스 == Memos 테이블과 일대일로 매핑
+    /// [1] Model Class: Memo 모델 클래스 == Memos 테이블과 일대일로 매핑
     /// Memo, MemoModel, MemoViewModel, MemoBase, MemoDto, MemoEntity, MemoObject, ...
     /// </summary>
     [Table("Memos")]

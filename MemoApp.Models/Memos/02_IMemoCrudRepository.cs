@@ -1,21 +1,15 @@
 ﻿using Dul.Articles;
 using Dul.Domain.Common;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MemoApp.Models
 {
     /// <summary>
-    /// [3] Generic Repository Interface => ICrudRepositoryBase.cs 
+    /// [2] Generic Repository Interface => ICrudRepositoryBase.cs 
     /// </summary>
-    public interface IMemoCrudRepository<T>
+    public interface IMemoCrudRepository<T> : ICrudRepositoryBase<T, int>
     {
-        Task<T> AddAsync(T model); // 입력
-        Task<List<T>> GetAllAsync(); // 출력
-        Task<T> GetByIdAsync(int id); // 상세
         Task<bool> EditAsync(T model); // 수정
-        //Task<bool> UpdateAsync(T model); // 수정 // https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.identity.usermanager-1.updateasync?view=aspnetcore-3.1
-        Task<bool> DeleteAsync(int id); // 삭제
         Task<T> AddAsync(
             T model,
             int parentRef,
@@ -61,14 +55,5 @@ namespace MemoApp.Models
             int pageSize,
             string searchQuery,
             string parentKey);
-
-        // 필터링 
-        Task<ArticleSet<T, int>> GetArticlesAsync<TParentIdentifier>(
-            int pageIndex,
-            int pageSize,
-            string searchField,
-            string searchQuery,
-            string sortOrder,
-            TParentIdentifier parentIdentifier);
     }
 }
