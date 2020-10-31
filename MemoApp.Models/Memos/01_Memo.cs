@@ -7,11 +7,12 @@ namespace MemoApp.Models
 {
     /// <summary>
     /// 기본 클래스: 공통 속성들을 모두 모아 놓은 만능 모델 클래스
+    /// MemoBase, ArticleBase, PostBase, EntryBase, ...
     /// </summary>
     public class MemoBase
     {
         /// <summary>
-        /// 일련 번호(Serial Number)
+        /// [1] 일련 번호(Serial Number)
         /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -34,7 +35,7 @@ namespace MemoApp.Models
         public string CreatedBy { get; set; }
 
         /// <summary>
-        /// 등록일: Created
+        /// [5] 등록일(생성일): Created
         /// </summary>
         //public DateTimeOffset Created { get; set; }
         public DateTime? Created { get; set; }
@@ -51,7 +52,7 @@ namespace MemoApp.Models
 
         #region [0] 5W1H: 누가, 언제, 어디서, 무엇을, 어떻게, 왜
         /// <summary>
-        /// 이름(작성자)
+        /// [2] 이름(작성자)
         /// </summary>
         [Required(ErrorMessage = "이름을 입력하세요.")]
         [MaxLength(255)]
@@ -73,7 +74,7 @@ namespace MemoApp.Models
         public string PostIp { get; set; }
 
         /// <summary>
-        /// 제목
+        /// [3] 제목
         /// </summary>
         [MaxLength(255)]
         [Required(ErrorMessage = "제목을 입력하세요.")]
@@ -82,7 +83,7 @@ namespace MemoApp.Models
         public string Title { get; set; }
 
         /// <summary>
-        /// 내용
+        /// [4] 내용
         /// </summary>
         [Display(Name = "내용")]
         public string Content { get; set; }
@@ -145,7 +146,7 @@ namespace MemoApp.Models
         public int CommentCount { get; set; }
 
         /// <summary>
-        /// 상단 고정: 공지글로 올리기
+        /// 상단 고정: 공지글로 올리기, IsActive
         /// </summary>
         public bool IsPinned { get; set; } = false;
         #endregion
