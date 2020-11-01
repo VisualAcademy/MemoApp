@@ -2,7 +2,7 @@
 --[!] 게시판 테이블 설계: Articles, Posts, Entries, Notes, Memos, (Basic+Upload+Reply) => DotNetMemo
 CREATE TABLE [dbo].[Memos]
 (
-	[Id]            INT NOT NULL PRIMARY KEY Identity(1, 1),    -- [1][일련번호], Serial Number
+	[Id]            BIGINT NOT NULL PRIMARY KEY Identity(1, 1), -- [1][일련번호], Serial Number
 	[ParentId]      Int Null,								    -- ParentId, AppId, SiteId, ...
 	[ParentKey]     NVarChar(255) Null,						    -- ParentKey == 부모의 GUID
 

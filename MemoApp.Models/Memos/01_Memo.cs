@@ -1,12 +1,11 @@
-﻿// PM> Install-Package System.ComponentModel.Annotations
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MemoApp.Models
 {
     /// <summary>
-    /// 기본 클래스: 공통 속성들을 모두 모아 놓은 만능 모델 클래스
+    /// [!] 기본 클래스: 공통 속성들을 모두 모아 놓은 만능 모델 클래스
     /// MemoBase, ArticleBase, PostBase, EntryBase, ...
     /// </summary>
     public class MemoBase
@@ -17,7 +16,7 @@ namespace MemoApp.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Display(Name = "번호")]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// 외래키?
@@ -36,9 +35,9 @@ namespace MemoApp.Models
 
         /// <summary>
         /// [5] 등록일(생성일): Created
-        /// </summary>
-        //public DateTimeOffset Created { get; set; }
-        public DateTime? Created { get; set; }
+        /// DateTime? 또는 DateTimeOffset? 
+        /// </summary>        
+        public DateTime? Created { get; set; } 
 
         /// <summary>
         /// 수정자: LastModifiedBy, ModifiedBy
@@ -203,7 +202,7 @@ namespace MemoApp.Models
 
     /// <summary>
     /// [1] Model Class: Memo 모델 클래스 == Memos 테이블과 일대일로 매핑
-    /// Memo, MemoModel, MemoViewModel, MemoBase, MemoDto, MemoEntity, MemoObject, ...
+    /// Memo, MemoModel, MemoViewModel, MemoDto, MemoEntity, MemoObject, ...
     /// </summary>
     [Table("Memos")]
     public class Memo : MemoBase
