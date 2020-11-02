@@ -1,5 +1,5 @@
-﻿--[1] Table: Memos(완성형 게시판) 테이블
---[!] 게시판 테이블 설계: Articles, Posts, Entries, Notes, Memos, (Basic+Upload+Reply) => DotNetMemo
+﻿--[1] Table: Memos(완성형 게시판) 테이블 설계 
+--[!] 게시판 테이블 설계: Articles, Posts, Entries, Notes, Memos, (Basic+Upload+Reply) => DotNetNote/DotNetMemo
 CREATE TABLE [dbo].[Memos]
 (
 	[Id]            BIGINT NOT NULL PRIMARY KEY Identity(1, 1), -- [1][일련번호], Serial Number
@@ -16,7 +16,7 @@ CREATE TABLE [dbo].[Memos]
     PostDate        DateTime Default GetDate() Not Null,        -- 작성일 
     PostIp          NVarChar(15) Null,                          -- 작성IP
     [Title]         NVarChar(150) Not Null,                     -- [3][제목]
-    [Content]       NVarChar(Max) Not Null,                     -- [4][내용]
+    [Content]       NText Not Null,                             -- [4][내용]__NVarChar(Max) => NText__
     Category        NVarChar(20) Default('Free') Null,          -- 카테고리(확장...) => '공지', '자유', '자료', '사진', ...
 
 	--[1] 기본형 게시판 관련 주요 컬럼
