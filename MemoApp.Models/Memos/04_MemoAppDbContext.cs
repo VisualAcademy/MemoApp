@@ -8,12 +8,12 @@ namespace MemoApp.Models
     /// </summary>
     public class MemoAppDbContext : DbContext
     {
-        // PM> Install-Package Microsoft.EntityFrameworkCore
         // PM> Install-Package Microsoft.EntityFrameworkCore.SqlServer
-        // PM> Install-Package Microsoft.EntityFrameworkCore.Tools
-        // PM> Install-Package Microsoft.EntityFrameworkCore.InMemory
-        // PM> Install-Package System.Configuration.ConfigurationManager
         // PM> Install-Package Microsoft.Data.SqlClient
+        // PM> Install-Package System.Configuration.ConfigurationManager
+        //// PM> Install-Package Microsoft.EntityFrameworkCore
+        //// PM> Install-Package Microsoft.EntityFrameworkCore.Tools
+        //// PM> Install-Package Microsoft.EntityFrameworkCore.InMemory
 
         public MemoAppDbContext()
         {

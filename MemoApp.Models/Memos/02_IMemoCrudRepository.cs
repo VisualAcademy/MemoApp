@@ -9,6 +9,8 @@ namespace MemoApp.Models
     /// </summary>
     public interface IMemoCrudRepository<T> : ICrudRepositoryBase<T, int>
     {
+        // PM> Install-Package Dul
+
         Task<bool> EditAsync(T model); // 수정
         Task<T> AddAsync(
             T model,

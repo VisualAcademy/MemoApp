@@ -9,6 +9,8 @@ namespace MemoApp.Models
     /// </summary>
     public interface IMemoRepository : IMemoCrudRepository<Memo>
     {
+        // PM> Install-Package Dul
+
         Task<Tuple<int, int>> GetStatus(int parentId);
         Task<bool> DeleteAllByParentId(int parentId);
         Task<SortedList<int, double>> GetMonthlyCreateCountAsync();
