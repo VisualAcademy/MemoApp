@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MemoApp.Models
 {
     /// <summary>
-    /// [5] Repository Class: ADO.NET or Dapper or Entity Framework Core
+    /// [4] Repository Class: ADO.NET or Dapper or Entity Framework Core
     /// ~Repository, ~Provider, ~Data
     /// </summary>
     public class MemoRepository : IMemoRepository
@@ -517,6 +517,12 @@ namespace MemoApp.Models
             }
 
             return model;
+        }
+
+        // TODO: 
+        public Task<ArticleSet<Memo, int>> GetByAsync<TParentIdentifier>(FilterOptions<TParentIdentifier> options)
+        {
+            return null; 
         }
     }
 }

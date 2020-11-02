@@ -1,13 +1,15 @@
 ﻿using Dul.Articles;
 using Dul.Domain.Common;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MemoApp.Models
 {
     /// <summary>
-    /// [2] Generic Repository Interface => ICrudRepositoryBase.cs 
+    /// [!] Generic Repository Interface => ICrudRepositoryBase.cs 
     /// </summary>
-    public interface IMemoCrudRepository<T> : ICrudRepositoryBase<T, int>
+    public interface IMemoCrudRepository<T> : ICrudRepositoryBase<Memo, int>
     {
         // PM> Install-Package Dul
 
@@ -57,5 +59,19 @@ namespace MemoApp.Models
             int pageSize,
             string searchQuery,
             string parentKey);
+    }
+
+    /// <summary>
+    /// [2] Repository Interface, Provider Interface
+    /// </summary>
+    public interface IMemoRepository : IMemoCrudRepository<Memo>
+    {
+        // PM> Install-Package Dul
+
+        Task<ArticleSet<Memo, int>> GetByAsync<TParentIdentifier>(FilterOptions<TParentIdentifier> options);
+
+        Task<Tuple<int, int>> GetStatus(int parentId);
+        Task<bool> DeleteAllByParentId(int parentId);
+        Task<SortedList<int, double>> GetMonthlyCreateCountAsync();
     }
 }

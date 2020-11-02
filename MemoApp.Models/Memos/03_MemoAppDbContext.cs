@@ -4,7 +4,7 @@ using System.Configuration;
 namespace MemoApp.Models
 {
     /// <summary>
-    /// [4] DbContext Class
+    /// [3] DbContext Class
     /// </summary>
     public class MemoAppDbContext : DbContext
     {

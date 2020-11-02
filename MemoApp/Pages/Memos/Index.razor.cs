@@ -43,7 +43,7 @@ namespace MemoApp.Pages.Memos
             StateHasChanged();
         }
 
-        protected void NameClick(int id)
+        protected void NameClick(long id)
         {
             NavigationManagerInjector.NavigateTo($"/Memos/Details/{id}");
         }
