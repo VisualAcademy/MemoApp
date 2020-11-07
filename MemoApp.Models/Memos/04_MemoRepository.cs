@@ -586,19 +586,24 @@ namespace MemoApp.Models
                     switch ($"{sf.Key}{sf.Value}")
                     {
                         case "NameAsc":
-                            items = items.OrderBy(m => m.Name);
+                            //items = items.OrderBy(m => m.Name);
+                            items = items.OrderBy(m => m.Name).ThenByDescending(m => m.Ref).ThenBy(m => m.RefOrder);
                             break;
                         case "NameDesc":
-                            items = items.OrderByDescending(m => m.Name);
+                            //items = items.OrderByDescending(m => m.Name);
+                            items = items.OrderByDescending(m => m.Name).ThenByDescending(m => m.Ref).ThenBy(m => m.RefOrder);
                             break;
                         case "TitleAsc":
-                            items = items.OrderBy(m => m.Title);
+                            //items = items.OrderBy(m => m.Title);
+                            items = items.OrderBy(m => m.Title).ThenByDescending(m => m.Ref).ThenBy(m => m.RefOrder);
                             break;
                         case "TitleDesc":
-                            items = items.OrderByDescending(m => m.Title);
+                            //items = items.OrderByDescending(m => m.Title);
+                            items = items.OrderByDescending(m => m.Title).ThenByDescending(m => m.Ref).ThenBy(m => m.RefOrder);
                             break;
                         default:
-                            items = items.OrderByDescending(m => m.Id);
+                            //items = items.OrderByDescending(m => m.Id);
+                            items = items.OrderByDescending(m => m.Ref).ThenBy(m => m.RefOrder);
                             break;
                     }
                 }
