@@ -24,13 +24,13 @@ namespace MemoApp.Models
         public MemoAppDbContext(DbContextOptions<MemoAppDbContext> options)
             : base(options)
         {
-            // 공식과 같은 코드
+            // 공식과 같은 코드, 교과서다운 코드
             // ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // 닷넷 프레임워크 기반에서 호출되는 코드 영역: 
+            // 닷넷 프레임워크 또는 Windows Forms/WPF 기반에서 호출되는 코드 영역: 
             // App.config 또는 Web.config의 연결 문자열 사용
             // 직접 데이터베이스 연결문자열 설정 가능
             if (!optionsBuilder.IsConfigured)
