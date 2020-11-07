@@ -24,8 +24,8 @@ namespace MemoApp.Models
             this._logger = loggerFactory.CreateLogger(nameof(MemoRepository));
         }
 
-        #region [6][1] 입력: AddAsync
-        //[6][1] 입력
+        #region [4][1] 입력: AddAsync
+        //[4][1] 입력
         public async Task<Memo> AddAsync(Memo model)
         {
             #region 답변 기능 추가
@@ -56,8 +56,8 @@ namespace MemoApp.Models
         }
         #endregion
 
-        #region [6][2] 출력: GetAllAsync
-        //[6][2] 출력
+        #region [4][2] 출력: GetAllAsync
+        //[4][2] 출력
         public async Task<List<Memo>> GetAllAsync()
         {
             // 학습 목적으로... InMemory 데이터베이스에선 사용 금지 
@@ -68,8 +68,8 @@ namespace MemoApp.Models
         }
         #endregion
 
-        #region //[6][3] 상세: GetByIdAsync
-        //[6][3] 상세
+        #region //[4][3] 상세: GetByIdAsync
+        //[4][3] 상세
         public async Task<Memo> GetByIdAsync(int id)
         {
             var model = await _context.Memos
@@ -89,8 +89,8 @@ namespace MemoApp.Models
         }
         #endregion
 
-        #region //[6][4] 수정: UpdateAsync
-        //[6][4] 수정
+        #region //[4][4] 수정: UpdateAsync
+        //[4][4] 수정
         public async Task<bool> EditAsync(Memo model)
         {
             try
@@ -125,8 +125,8 @@ namespace MemoApp.Models
         }
         #endregion
 
-        #region //[6][5] 삭제: DeleteAsync
-        //[6][5] 삭제
+        #region //[4][5] 삭제: DeleteAsync
+        //[4][5] 삭제
         public async Task<bool> DeleteAsync(int id)
         {
             //var model = await _context.Memos.SingleOrDefaultAsync(m => m.Id == id);
@@ -146,7 +146,7 @@ namespace MemoApp.Models
         } 
         #endregion
 
-        //[6][6] 페이징
+        //[4][6] 페이징
         public async Task<PagingResult<Memo>> GetAllAsync(int pageIndex, int pageSize)
         {
             var totalRecords = await _context.Memos.CountAsync();
@@ -160,7 +160,7 @@ namespace MemoApp.Models
             return new PagingResult<Memo>(models, totalRecords);
         }
 
-        //[6][7] 부모
+        //[4][7] 부모
         public async Task<PagingResult<Memo>> GetAllByParentIdAsync(
             int pageIndex,
             int pageSize,
@@ -178,7 +178,7 @@ namespace MemoApp.Models
             return new PagingResult<Memo>(models, totalRecords);
         }
 
-        //[6][8] 상태
+        //[4][8] 상태
         public async Task<Tuple<int, int>> GetStatus(int parentId)
         {
             var totalRecords = await _context.Memos.Where(m => m.ParentId == parentId).CountAsync();
@@ -187,7 +187,7 @@ namespace MemoApp.Models
             return new Tuple<int, int>(pinnedRecords, totalRecords); // (2, 10)
         }
 
-        //[6][9] 부모 삭제
+        //[4][9] 부모 삭제
         public async Task<bool> DeleteAllByParentId(int parentId)
         {
             try
@@ -210,7 +210,7 @@ namespace MemoApp.Models
             return false;
         }
 
-        //[6][10] 검색
+        //[4][10] 검색
         public async Task<PagingResult<Memo>> SearchAllAsync(
             int pageIndex,
             int pageSize,
@@ -230,7 +230,7 @@ namespace MemoApp.Models
             return new PagingResult<Memo>(models, totalRecords);
         }
 
-        //[6][11] 부모 검색
+        //[4][11] 부모 검색
         public async Task<PagingResult<Memo>> SearchAllByParentIdAsync(
             int pageIndex,
             int pageSize,
@@ -251,7 +251,7 @@ namespace MemoApp.Models
             return new PagingResult<Memo>(models, totalRecords);
         }
 
-        //[6][12] 통계
+        //[4][12] 통계
         public async Task<SortedList<int, double>> GetMonthlyCreateCountAsync()
         {
             SortedList<int, double> createCounts = new SortedList<int, double>();
@@ -279,7 +279,7 @@ namespace MemoApp.Models
             return await Task.FromResult(createCounts);
         }
 
-        //[6][13] 부모 페이징
+        //[4][13] 부모 페이징
         public async Task<PagingResult<Memo>> GetAllByParentKeyAsync(
             int pageIndex,
             int pageSize,
@@ -297,7 +297,7 @@ namespace MemoApp.Models
             return new PagingResult<Memo>(models, totalRecords);
         }
 
-        //[6][14] 부모 검색
+        //[4][14] 부모 검색
         public async Task<PagingResult<Memo>> SearchAllByParentKeyAsync(
             int pageIndex,
             int pageSize,
@@ -318,7 +318,7 @@ namespace MemoApp.Models
             return new PagingResult<Memo>(models, totalRecords);
         }
 
-        //[6][15] 리스트(페이징, 검색, 정렬)
+        //[4][15] 리스트(페이징, 검색, 정렬)
         public async Task<ArticleSet<Memo, int>> GetArticlesAsync<TParentIdentifier>(
             int pageIndex,
             int pageSize,
@@ -401,7 +401,7 @@ namespace MemoApp.Models
             return new ArticleSet<Memo, int>(await items.ToListAsync(), totalCount);
         }
 
-        //[6][16] 답변: ReplyApp
+        //[4][16] 답변: ReplyApp
         public async Task<Memo> AddAsync(Memo model, int parentRef, int parentStep, int parentRefOrder)
         {
             #region 답변 관련 기능 추가된 영역
@@ -440,7 +440,7 @@ namespace MemoApp.Models
             return model;
         }
 
-        //[6][17] 답변: MemoApp
+        //[4][17] 답변: MemoApp
         public async Task<Memo> AddAsync(Memo model, int parentId)
         {
             #region 답변 관련 기능 추가된 영역
