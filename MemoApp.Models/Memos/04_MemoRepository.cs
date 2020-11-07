@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace MemoApp.Models
 {
     /// <summary>
-    /// [4] Repository Class: ADO.NET or Dapper or Entity Framework Core
+    /// [4] Repository Class: ADO.NET or Dapper(Micro ORM) or Entity Framework Core(ORM)
     /// ~Repository, ~Provider, ~Data
     /// </summary>
     public class MemoRepository : IMemoRepository
@@ -25,7 +25,7 @@ namespace MemoApp.Models
         }
 
         #region [4][1] 입력: AddAsync
-        //[4][1] 입력
+        //[4][1] 입력: AddAsync
         public async Task<Memo> AddAsync(Memo model)
         {
             #region 답변 기능 추가
@@ -57,7 +57,7 @@ namespace MemoApp.Models
         #endregion
 
         #region [4][2] 출력: GetAllAsync
-        //[4][2] 출력
+        //[4][2] 출력: GetAllAsync
         public async Task<List<Memo>> GetAllAsync()
         {
             // 학습 목적으로... InMemory 데이터베이스에선 사용 금지 
@@ -68,8 +68,8 @@ namespace MemoApp.Models
         }
         #endregion
 
-        #region //[4][3] 상세: GetByIdAsync
-        //[4][3] 상세
+        #region [4][3] 상세: GetByIdAsync
+        //[4][3] 상세: GetByIdAsync
         public async Task<Memo> GetByIdAsync(int id)
         {
             var model = await _context.Memos
@@ -89,15 +89,14 @@ namespace MemoApp.Models
         }
         #endregion
 
-        #region //[4][4] 수정: UpdateAsync
-        //[4][4] 수정
+        #region [4][4] 수정: UpdateAsync
+        //[4][4] 수정: UpdateAsync
         public async Task<bool> EditAsync(Memo model)
         {
             try
             {
-                //_context.Memos.Attach(model);
-                //_context.Entry(model).State = EntityState.Modified;
-                _context.Update(model);
+                _context.Memos.Attach(model);
+                _context.Entry(model).State = EntityState.Modified;
                 return (await _context.SaveChangesAsync() > 0 ? true : false);
             }
             catch (Exception e)
@@ -118,14 +117,14 @@ namespace MemoApp.Models
             }
             catch (Exception e)
             {
-                _logger?.LogError($"ERROR({nameof(EditAsync)}): {e.Message}");
+                _logger?.LogError($"ERROR({nameof(UpdateAsync)}): {e.Message}");
             }
 
             return false;
         }
         #endregion
 
-        #region //[4][5] 삭제: DeleteAsync
+        #region [4][5] 삭제: DeleteAsync
         //[4][5] 삭제
         public async Task<bool> DeleteAsync(int id)
         {
@@ -137,16 +136,17 @@ namespace MemoApp.Models
                 _context.Remove(model);
                 return (await _context.SaveChangesAsync() > 0 ? true : false);
             }
-            catch (Exception e)
+            catch (Exception ಠ_ಠ) // Disapproval Look
             {
-                _logger?.LogError($"ERROR({nameof(DeleteAsync)}): {e.Message}");
+                _logger?.LogError($"ERROR({nameof(DeleteAsync)}): {ಠ_ಠ.Message}");
             }
 
             return false;
-        } 
+        }
         #endregion
 
-        //[4][6] 페이징
+        #region [4][6] 페이징: GetAllAsync()
+        //[4][6] 페이징: GetAllAsync()
         public async Task<PagingResult<Memo>> GetAllAsync(int pageIndex, int pageSize)
         {
             var totalRecords = await _context.Memos.CountAsync();
@@ -158,7 +158,8 @@ namespace MemoApp.Models
                 .ToListAsync();
 
             return new PagingResult<Memo>(models, totalRecords);
-        }
+        } 
+        #endregion
 
         //[4][7] 부모
         public async Task<PagingResult<Memo>> GetAllByParentIdAsync(
