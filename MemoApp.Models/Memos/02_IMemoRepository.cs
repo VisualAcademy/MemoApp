@@ -9,6 +9,7 @@ namespace MemoApp.Models
     /// <summary>
     /// [!] Generic Repository Interface => ICrudRepositoryBase.cs 
     /// </summary>
+    //public interface IMemoCrudRepository<T> : IRepositoryBase<Memo, long, long>
     public interface IMemoCrudRepository<T> : ICrudRepositoryBase<Memo, int>
     {
         // PM> Install-Package Dul
@@ -68,7 +69,7 @@ namespace MemoApp.Models
     {
         // PM> Install-Package Dul
 
-        Task<ArticleSet<Memo, int>> GetByAsync<TParentIdentifier>(FilterOptions<TParentIdentifier> options);
+        Task<ArticleSet<Memo, long>> GetByAsync<TParentIdentifier>(FilterOptions<TParentIdentifier> options);
 
         Task<Tuple<int, int>> GetStatus(int parentId);
         Task<bool> DeleteAllByParentId(int parentId);

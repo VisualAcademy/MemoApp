@@ -520,10 +520,96 @@ namespace MemoApp.Models
             return model;
         }
 
-        // TODO: 
-        public Task<ArticleSet<Memo, int>> GetByAsync<TParentIdentifier>(FilterOptions<TParentIdentifier> options)
+        #region [4][6] 검색: GetByAsync()
+        //[4][6] 검색: GetByAsync()
+        public async Task<ArticleSet<Memo, long>> GetByAsync<TParentIdentifier>(
+            FilterOptions<TParentIdentifier> options)
         {
-            return null; 
+            //var items = from m in _context.Memos select m; // 쿼리 구문(Query Syntax)
+            //var items = _context.Memos.Select(m => m); // 메서드 구문(Method Syntax)
+            var items = _context.Memos.AsQueryable();
+
+            #region ParentBy: 특정 부모 키 값(int, string)에 해당하는 리스트인지 확인
+            if (options.ChildMode)
+            {
+                // ParentBy 
+                if (options.ParentIdentifier is int parentId && parentId != 0)
+                {
+                    //items = items.Where(m => m.ParentId == parentId);
+                }
+                else if (options.ParentIdentifier is string parentKey && !string.IsNullOrEmpty(parentKey))
+                {
+                    //items = items.Where(m => m.ParentKey == parentKey);
+                }
+            }
+            #endregion
+
+            #region Search Mode: SearchField와 SearchQuery에 해당하는 데이터 검색
+            if (options.SearchMode)
+            {
+                // Search Mode
+                if (!string.IsNullOrEmpty(options.SearchQuery))
+                {
+                    if (options.SearchField == "Name")
+                    {
+                        // Name
+                        items = items.Where(m => m.Name.Contains(options.SearchQuery));
+                    }
+                    else if (options.SearchField == "Title")
+                    {
+                        // Title
+                        items = items.Where(m => m.Title.Contains(options.SearchQuery));
+                    }
+                    else if (options.SearchField == "Content")
+                    {
+                        // Title
+                        items = items.Where(m => m.Content.Contains(options.SearchQuery));
+                    }
+                    else
+                    {
+                        // All: 기타 더 검색이 필요한 컬럼이 있다면 추가 가능
+                        items = items.Where(m => m.Name.Contains(options.SearchQuery) || m.Title.Contains(options.SearchQuery) || m.Content.Contains(options.SearchQuery));
+                    }
+                }
+            }
+            #endregion
+
+            // 총 레코드 수 계산
+            var totalCount = await items.CountAsync();
+
+            #region Sorting: 어떤 열에 대해 정렬(None, Asc, Desc)할 것인지 원하는 문자열로 지정
+            if (options.SortMode)
+            {
+                // Sorting
+                foreach (var sf in options.SortFields)
+                {
+                    switch ($"{sf.Key}{sf.Value}")
+                    {
+                        case "NameAsc":
+                            items = items.OrderBy(m => m.Name);
+                            break;
+                        case "NameDesc":
+                            items = items.OrderByDescending(m => m.Name);
+                            break;
+                        case "TitleAsc":
+                            items = items.OrderBy(m => m.Title);
+                            break;
+                        case "TitleDesc":
+                            items = items.OrderByDescending(m => m.Title);
+                            break;
+                        default:
+                            items = items.OrderByDescending(m => m.Id);
+                            break;
+                    }
+                }
+            }
+            #endregion
+
+            // Paging
+            items = items.Skip(options.PageIndex * options.PageSize).Take(options.PageSize);
+
+            return new ArticleSet<Memo, long>(await items.ToListAsync(), totalCount);
         }
+        #endregion
     }
 }
