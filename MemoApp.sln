@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemoApp.Models", "MemoApp.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReplyApp.Models", "ReplyApp.Models\ReplyApp.Models.csproj", "{0F076C27-ADAD-4A64-939A-3B69B23D58CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoApp.Apis", "MemoApp.Apis\MemoApp.Apis.csproj", "{8ADE102B-A26E-4B6E-B75F-26EEB73D707A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MemoApp.Apis", "MemoApp.Apis\MemoApp.Apis.csproj", "{8ADE102B-A26E-4B6E-B75F-26EEB73D707A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MemoApp.Models.UnitTests", "MemoApp.Models.UnitTests\MemoApp.Models.UnitTests.csproj", "{333CBFE5-11DC-45E3-BE00-6DB45B5DD869}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +87,10 @@ Global
 		{8ADE102B-A26E-4B6E-B75F-26EEB73D707A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ADE102B-A26E-4B6E-B75F-26EEB73D707A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ADE102B-A26E-4B6E-B75F-26EEB73D707A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{333CBFE5-11DC-45E3-BE00-6DB45B5DD869}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{333CBFE5-11DC-45E3-BE00-6DB45B5DD869}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{333CBFE5-11DC-45E3-BE00-6DB45B5DD869}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{333CBFE5-11DC-45E3-BE00-6DB45B5DD869}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

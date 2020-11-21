@@ -13,7 +13,7 @@ namespace MemoApp.Models
     /// [4] Repository Class: ADO.NET or Dapper(Micro ORM) or Entity Framework Core(ORM)
     /// ~Repository, ~Provider, ~Data
     /// </summary>
-    public class MemoRepository : IMemoRepository
+    public class MemoRepository : IMemoRepository, IDisposable
     {
         private readonly MemoAppDbContext _context;
         private readonly ILogger _logger;
@@ -134,7 +134,7 @@ namespace MemoApp.Models
                 var model = await _context.Memos.FindAsync(id);
                 //_context.Memos.Remove(model);
                 _context.Remove(model);
-                return (await _context.SaveChangesAsync() > 0 ? true : false);
+                return await _context.SaveChangesAsync() > 0;
             }
             catch (Exception ಠ_ಠ) // Disapproval Look
             {
@@ -614,6 +614,26 @@ namespace MemoApp.Models
             items = items.Skip(options.PageIndex * options.PageSize).Take(options.PageSize);
 
             return new ArticleSet<Memo, long>(await items.ToListAsync(), totalCount);
+        }
+        #endregion
+
+        #region Dispose
+        // https://docs.microsoft.com/ko-kr/dotnet/api/system.gc.suppressfinalize?view=net-5.0
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_context != null)
+                {
+                    _context.Dispose(); //_context = null;
+                }
+            }
         }
         #endregion
     }
