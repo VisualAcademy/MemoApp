@@ -84,7 +84,7 @@ namespace MemoApp.Apis.Controllers
         // 출력
         // GET api/Memos
         [HttpGet] // [HttpGet("[action]")] // @GetMapping
-        public async Task<IActionResult> GetAll()
+        public async ValueTask<ActionResult<IOrderedEnumerable<Memo>>> GetAll()
         {
             try
             {
@@ -93,7 +93,7 @@ namespace MemoApp.Apis.Controllers
                 {
                     return new NoContentResult(); // 참고용 코드
                 }
-                return Ok(models); // 200 OK
+                return new JsonResult(models); //return Ok(models); // 200 OK
             }
             catch (Exception e)
             {
