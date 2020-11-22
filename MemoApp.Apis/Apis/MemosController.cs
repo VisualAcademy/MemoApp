@@ -27,7 +27,7 @@ namespace MemoApp.Apis.Controllers
         #region 입력
         // 입력
         // POST api/Memos
-        [HttpPost] // PostMapping
+        [HttpPost] // @PostMapping
         public async Task<IActionResult> AddAsync([FromBody] Memo dto)
         {
             if (!ModelState.IsValid)
@@ -130,7 +130,7 @@ namespace MemoApp.Apis.Controllers
         #region 수정
         // 수정
         // PUT api/Memos/123
-        [HttpPut("{id}")]
+        [HttpPut("{id}")] // @PutMapping
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] Memo dto)
         {
             if (dto == null)
@@ -177,7 +177,7 @@ namespace MemoApp.Apis.Controllers
         #region 삭제
         // 삭제
         // DELETE api/Memos/1
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id:int}")] // @DeleteMapping 
         public async Task<IActionResult> DeleteAsync(int id)
         {
             try
@@ -251,7 +251,7 @@ namespace MemoApp.Apis.Controllers
         #region 입력
         // 입력
         // POST api/Memos
-        [HttpPost] // PostMapping
+        [HttpPost] // @PostMapping
         public async Task<IActionResult> AddAsync([FromBody] Memo dto)
         {
             if (!ModelState.IsValid)
@@ -354,7 +354,7 @@ namespace MemoApp.Apis.Controllers
         #region 수정
         // 수정
         // PUT api/Memos/123
-        [HttpPut("{id}")]
+        [HttpPut("{id}")] // @PutMapping 
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] Memo dto)
         {
             if (dto == null)
@@ -401,7 +401,7 @@ namespace MemoApp.Apis.Controllers
         #region 삭제
         // 삭제
         // DELETE api/Memos/1
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id:int}")] // @DeleteMapping 
         public async Task<IActionResult> DeleteAsync(int id)
         {
             try
