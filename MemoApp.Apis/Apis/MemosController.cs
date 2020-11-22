@@ -69,7 +69,7 @@ namespace MemoApp.Apis.Controllers
                 else
                 {
                     // GetById 액션 이름 사용해서 입력된 데이터 반환 
-                    return CreatedAtAction(nameof(GetById), new { id = model.Id }, model);
+                    return CreatedAtAction(nameof(GetMemoById), new { id = model.Id }, model);
                 }
             }
             catch (Exception e)
@@ -106,8 +106,8 @@ namespace MemoApp.Apis.Controllers
         #region 상세
         // 상세
         // GET api/Memos/123
-        [HttpGet("{id:int}", Name = "GetMemoById")] // Name 속성으로 RouteName 설정
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        [HttpGet("{id:int}", Name = nameof(GetMemoById))] // Name 속성으로 RouteName 설정
+        public async Task<IActionResult> GetMemoById([FromRoute] int id)
         {
             try
             {
@@ -293,7 +293,7 @@ namespace MemoApp.Apis.Controllers
                 else
                 {
                     // GetById 액션 이름 사용해서 입력된 데이터 반환 
-                    return CreatedAtAction(nameof(GetById), new { id = model.Id }, model);
+                    return CreatedAtAction(nameof(GetMemoById), new { id = model.Id }, model);
                 }
             }
             catch (Exception e)
@@ -330,8 +330,8 @@ namespace MemoApp.Apis.Controllers
         #region 상세
         // 상세
         // GET api/Memos/123
-        [HttpGet("{id:int}", Name = "GetMemoById")] // Name 속성으로 RouteName 설정
-        public async Task<IActionResult> GetById([FromRoute] int id)
+        [HttpGet("{id:int}", Name = "GetMemoById")] // Name 속성으로 RouteName 설정: nameof 연산자 사용 권장
+        public async Task<IActionResult> GetMemoById([FromRoute] int id)
         {
             try
             {
