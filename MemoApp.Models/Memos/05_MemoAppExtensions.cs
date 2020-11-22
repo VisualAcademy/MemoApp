@@ -1,14 +1,13 @@
-﻿using MemoApp.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MemoApp.Apis.Memos
+namespace MemoApp.Models
 {
     /// <summary>
     /// 메모앱(MemoApp) 관련 의존성(종속성) 주입 관련 코드만 따로 모아서 관리 
     /// </summary>
-    public static class StartupMemoAppExtensions
+    public static class MemoAppExtensions
     {
         public static void AddDependencyInjectionContainerForMemoApp(this IServiceCollection services, IConfiguration configuration)
         {

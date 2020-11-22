@@ -1,4 +1,4 @@
-using MemoApp.Apis.Memos;
+using MemoApp.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +21,17 @@ namespace MemoApp.Apis
         {
             services.AddControllers();
 
+            #region CORS
+            //[CORS] Angular, React 등의 SPA를 위한 CORS(Cross Origin Resource Sharing) 설정 1/2
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins("https://localhost:3000"); // [!] Trailing Slash
+                });
+            });
+            #endregion
+
             /// <summary>
             /// 메모앱(MemoApp) 관련 의존성(종속성) 주입 관련 코드만 따로 모아서 관리 
             /// </summary>
@@ -38,6 +49,11 @@ namespace MemoApp.Apis
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            #region CORS
+            //[CORS] Angular, React 등의 SPA를 위한 CORS(Cross Origin Resource Sharing) 설정 2/2
+            app.UseCors(); // 반드시 UseRouting() 뒤에 와야 함  
+            #endregion
 
             app.UseAuthorization();
 
