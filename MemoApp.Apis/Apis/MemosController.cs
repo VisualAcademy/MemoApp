@@ -131,8 +131,13 @@ namespace MemoApp.Apis.Controllers
         // 수정
         // PUT api/Memos/123
         [HttpPut("{id}")] // @PutMapping
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] Memo dto)
+        public async Task<IActionResult> UpdateAsync([FromRoute] int? id, [FromBody] Memo dto)
         {
+            if (id is null)
+            {
+                return NotFound(); 
+            }
+
             if (dto == null)
             {
                 return BadRequest();
@@ -144,7 +149,7 @@ namespace MemoApp.Apis.Controllers
             }
 
             // <>
-            var origin = await _repository.GetByIdAsync(id);
+            var origin = await _repository.GetByIdAsync(id ?? default);
             if (origin != null)
             {
                 origin.Name = dto.Name;
@@ -156,7 +161,7 @@ namespace MemoApp.Apis.Controllers
 
             try
             {
-                origin.Id = id;
+                origin.Id = id ?? default;
                 var status = await _repository.UpdateAsync(origin);
                 if (!status)
                 {
@@ -355,8 +360,13 @@ namespace MemoApp.Apis.Controllers
         // 수정
         // PUT api/Memos/123
         [HttpPut("{id}")] // @PutMapping 
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] Memo dto)
+        public async Task<IActionResult> UpdateAsync([FromRoute] int? id, [FromBody] Memo dto)
         {
+            if (id is null)
+            {
+                return NotFound(); 
+            }
+
             if (dto == null)
             {
                 return BadRequest();
@@ -368,7 +378,7 @@ namespace MemoApp.Apis.Controllers
             }
 
             // <>
-            var origin = await _repository.GetByIdAsync(id);
+            var origin = await _repository.GetByIdAsync(id ?? default);
             if (origin != null)
             {
                 origin.Name = dto.Name;
@@ -380,7 +390,7 @@ namespace MemoApp.Apis.Controllers
 
             try
             {
-                origin.Id = id;
+                origin.Id = id ?? default;
                 var status = await _repository.UpdateAsync(origin);
                 if (!status)
                 {
