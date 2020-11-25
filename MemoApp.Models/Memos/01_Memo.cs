@@ -7,6 +7,7 @@ namespace MemoApp.Models
     /// <summary>
     /// [!] 기본 클래스: 공통 속성들을 모두 모아 놓은 만능 모델 클래스
     /// MemoBase, ArticleBase, PostBase, EntryBase, ...
+    /// Scaffold-DbContext: https://docs.microsoft.com/ko-kr/ef/core/cli/powershell#scaffold-dbcontext
     /// </summary>
     public class MemoBase
     {
