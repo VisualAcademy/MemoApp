@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +24,11 @@ namespace MemoApp.Apis.Controllers
             this._repository = repository ?? throw new ArgumentNullException(nameof(MemosController));
             this._logger = loggerFactory.CreateLogger(nameof(MemosController));
         }
+
+        #region 시험
+        [HttpGet("[action]")] // api/Memos/Test
+        public IEnumerable<Memo> Test() => Enumerable.Empty<Memo>();
+        #endregion
 
         #region 입력
         // 입력
@@ -252,6 +258,11 @@ namespace MemoApp.Apis.Controllers
             this._repository = repository ?? throw new ArgumentNullException(nameof(MemosController));
             this._logger = loggerFactory.CreateLogger(nameof(MemosController));
         }
+
+        #region 시험
+        [HttpGet("[action]")] // api/Memos/Test
+        public IEnumerable<Memo> Test() => Enumerable.Empty<Memo>();
+        #endregion
 
         #region 입력
         // 입력
