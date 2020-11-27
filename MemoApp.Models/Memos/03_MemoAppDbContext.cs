@@ -20,7 +20,7 @@ namespace MemoApp.Models
         //// PM> Install-Package Microsoft.AspNetCore.All // 2.1 버전까지만 사용 가능 
         #endregion
 
-        public MemoAppDbContext()
+        public MemoAppDbContext() : base() 
         {
             // Empty
             // ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
