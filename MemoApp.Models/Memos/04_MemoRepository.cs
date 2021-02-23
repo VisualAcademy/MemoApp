@@ -452,7 +452,7 @@ namespace MemoApp.Models
             var parentStep = 0;
             var parentRefOrder = 0;
 
-            //[1] 부모글의 답변수(AnswerNum)를 1증가
+            //[1] 부모글(답변의 대상)의 답변수(AnswerNum)를 1증가
             var parent = await GetByIdAsync(parentId);
             if (parent != null)
             {
@@ -465,7 +465,7 @@ namespace MemoApp.Models
                 await EditAsync(parent);
             }
 
-            //[2] 동일 레벨의 답변이라면, 답변 순서대로 RefOrder를 설정
+            //[2] 동일 레벨의 답변이라면, 답변 순서대로 RefOrder를 설정. 같은 글에 대해서 답변을 두 번 이상하면 먼저 답변한 게 위에 나타나게 한다.
             var tempMaxRefOrder = await _context.Memos.Where(m => m.ParentNum == parentId).DefaultIfEmpty().MaxAsync(m => m == null ? 0 : m.RefOrder);
             var sameGroup = await _context.Memos.Where(m => m.ParentNum == parentId && m.RefOrder == tempMaxRefOrder).FirstOrDefaultAsync();
             if (sameGroup != null)
@@ -499,6 +499,7 @@ namespace MemoApp.Models
                 }
             }
 
+            //[4] 최종 저장
             model.Ref = parentRef; // 답변 글의 Ref(그룹)은 부모 글의 Ref를 그대로 저장 
             model.Step = parentStep + 1; // 어떤 글의 답변 글이기에 들여쓰기 1 증가 
             model.RefOrder = (maxRefOrder + maxAnswerNum + 1); // 부모글의 바로 다음번 순서로 보여지도록 설정 
